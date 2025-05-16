@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="stilosissimo.css">
+  <title>Invia Link via Email</title>
+</head>
+<body>
+    <div class="wrapper">
+      <div class="h1"><h1>Inserisci la tua email</h1></div>
+      <form id="emailForm">
+        <label for="email">Email:</label>
+        <div class="input-box">
+          <input type="email" id="email" name="email" required>
+        </div>
+        <button type="submit" class="btn">Invia</button>
+      </form>
+    </div>
+  </form>
+  <script>
+    document.getElementById('emailForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+
+      try {
+        const response = await fetch('/send-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        if (response.ok) {
+          alert('Email inviata con successo!');
+        } else {
+          alert('Errore durante l\'invio dell\'email.');
+        }
+      } catch (error) {
+        console.error('Errore:', error);
+        alert('Errore di connessione.');
+      }
+    });
+  </script>
+</body>
+</html>
